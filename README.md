@@ -20,10 +20,11 @@ method was found it gets called within this objects context. Thus inheritance in
 delegation automatism that is bound to the `prototype` slot of constructor functions.
 
 But almost from its beginning JavaScript has been capable of delegating a function or a method directly to
-an object that has need of it via `call` or `apply`. This is from what the repeated articles/discussions -
-[and also the most recent one](http://webreflection.blogspot.de/2013/04/flight-mixins-are-awesome.html) that
-[right now already has aggregated into a project](https://github.com/WebReflection/object-mixin) - are driven.
+an object that has need of it via `call` or `apply`. Thus introducing an object composition pattern based on
+functional TRAIT/MIXIN modules. This knowledge then repeatedly drives articles/discussions -
+[also the most recent one](http://webreflection.blogspot.de/2013/04/flight-mixins-are-awesome.html)
+that [right now already has aggregated into a project](https://github.com/WebReflection/object-mixin).
 
 But before using such smart approaches it might be helpful to have a look into function based code reuse patterns
-that do only rely on JavaScript's module pattern and therefore might be considered to be still free of any kind
-of meta programming.
+that do rely only on JavaScript's module pattern and therefore can be considered to be still free of any kind of
+meta programming.
