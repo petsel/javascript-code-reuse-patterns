@@ -37,7 +37,7 @@ But instead of wildly "borrowing" such methods again and again the next step tow
 be ***collecting them*** and ***providing them***, when needed.
 
 ```
-var Talktive = function () {
+var Talkative = function () {
   makeSound: function () {
     console.log(this.sound);
   }
@@ -48,14 +48,14 @@ var cat = {
 var dog = {
  sound: "woof"
 };
-Talktive.call(cat);
-Talktive.apply(dog);
+Talkative.call(cat);
+Talkative.apply(dog);
 
 cat.makeSound(); // "meow"
 dog.makeSound(); // "woof"
 ```
 
-`Talktive` is a reusable module of code. Ruby supports including such modules and calls them Mixins. Perl 6 has
+`Talkative` is a reusable module of code. Ruby supports including such modules and calls them Mixins. Perl 6 has
 its own approach called Roles.
 
 
