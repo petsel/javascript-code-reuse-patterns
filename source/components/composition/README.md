@@ -124,6 +124,7 @@ German only:
 * [Objektfunctionen - Vererbung durch Delegation](http://forum.de.selfhtml.org/archiv/2008/8/t176279/#m1159535) - September 1, 2008
 * [Mixin: Verhalten durch Delegation über implementierte Interfaces](http://forum.de.selfhtml.org/archiv/2008/9/t176473/#m1161116) - September 4, 2008
 * [\[HTMLElement\]e mit zusätzlichem Verhalten ausstatten](http://forum.de.selfhtml.org/archiv/2009/1/t182429/#m1207797) - January 1, 2009
+* [Google Drive/Docs :: Die-natuerliche-Veranlagung-des-JavaScript-Sprachkerns-fuer-Traits_2009-10-21](https://drive.google.com/?tab=mo&authuser=0#folders/0B15K4-2iDlFDS1pCNjhXc1lqTkE) - October 21, 2009
 
 
 English:
