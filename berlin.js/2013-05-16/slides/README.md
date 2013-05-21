@@ -1,4 +1,4 @@
-The slides (and its notes if run in presentation mode) that should have accompanied the talk at berlin.js May 16th that wasn't hold.
+The slides (and its notes if run in presentation mode) that should have accompanied the talk at berlin.js May 16th that wasn't held.
 
 
 based on (thanks to Hakim El Hattab)
