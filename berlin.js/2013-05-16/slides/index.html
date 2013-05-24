@@ -846,13 +846,72 @@ PrivilegedMixin.call(obj, "injectedState"); // [obj] now features additional beh
           </section>
 
 
+          <section>
+            <h3><code>Trait</code> and <code>Mixin</code> based Type/Object Composition in JS.</h3>
+
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns/blob/master/source/types/creation/Factories/Composite.js">pattern example</a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var CompositeTypeFactory = (function () {
+
+  var CompositeType = function (type_configuration) {
+    var compositeType = this;
+    /*
+      - do implement something type specific
+      - do something with e.g. [type_configuration]
+    */
+    var locallyScopedTypeSpecificReference = [];
+
+    Mixin.apply(compositeType);
+    PrivilegedTrait.apply(compositeType, locallyScopedTypeSpecificReference);
+  };
+  CompositeType.prototype = {
+    /*
+      - if necessary do assign and/or describe
+        the [CompositeType] constructor's prototype.
+    */
+  };
+  /*
+    - purely stateless trait implementations almost always
+      should be exclusively applied to a constructors prototype.
+  */
+  Trait.call(CompositeType.prototype);
+
+  var
+    createType = function (arg_0/*[, arg_1[, arg_2[,...]]]*/) {
+      return (new CompositeType({
+        /*
+          do something with [arguments] ...
+          ... e.g. creating a type configuration.
+        */
+      }));
+    },
+    isType = function (type) {
+      return (type instanceof CompositeType);
+    }
+  ;
+
+  return {
+    create: createType,
+    isType: isType
+  };
+
+}());
+
+              </code>
+            </pre>
+          </section>
+
+
           <section id="composition-conflicts">
             <h5><code>Trait</code> and <code>Mixin</code> based Type/Object Composition in JS.</h5>
             <h3>Resolving Composition Conflicts</h3>
 
             <p>
-              <code>Trait</code> and <code>Mixin</code> implementation could solve conflicts by
-              making use of <em><a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a></em> inspired <em><a href="https://gist.github.com/petsel/5592016">method modifiers</a></em>.
+              <code>Trait</code> and <code>Mixin</code> implementations might resolve conflicts by making use of
+              <em><a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a></em> inspired
+              <em><a href="https://gist.github.com/petsel/5592016">method modifiers</a></em>.
             </p>
             <ul>
               <li class="fragment"><code>Function.prototype.before</code></li>
