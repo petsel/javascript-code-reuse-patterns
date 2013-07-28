@@ -28,3 +28,11 @@ that [right now already has aggregated into a project](https://github.com/WebRef
 But before using such smart approaches it might be helpful to have a look into function based code reuse patterns
 that do rely only on JavaScript's module pattern and therefore can be considered to be still free of any kind of
 meta programming.
+
+
+Go for the slideshow or get a closer look at the sources.
+
+- [2013-05-16: slides prepared for the berlin.js talk that unfortunately couldn't be held.]http://petsel.github.io/javascript-code-reuse-patterns/berlin.js/2013-05-16/slides)
+
+- [Type Composition](./tree/master/source/components/composition).
+- [Type Factories](tree/master/source/types/creation/Factories).
