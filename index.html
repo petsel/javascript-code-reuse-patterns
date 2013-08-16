@@ -1,9 +1,12 @@
 <!doctype html>
 <html>
+
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Javascript-code-reuse-patterns by petsel</title>
+
+    <title>javascript-code-reuse-patterns by petsel</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -12,66 +15,90 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
+
+
   <body>
     <div class="wrapper">
-      <header>
-        <h1>Javascript-code-reuse-patterns</h1>
-        <p>low level abstraction, module based, code reuse patterns (function based Traits, Mixins) intended for reflecting the basics before starting with more complex meta programming approaches.</p>
 
-        <p class="view"><a href="https://github.com/petsel/javascript-code-reuse-patterns">View the Project on GitHub <small>petsel/javascript-code-reuse-patterns</small></a></p>
+
+      <header>
+        <h1>javascript-code-reuse-patterns</h1>
+
+        <p>
+          low level abstraction, module based, code reuse patterns (function based Traits, Mixins) intended for reflecting
+          the basics before starting with more complex meta programming approaches.
+        </p>
+
+        <p class="view"><a href="https://github.com/petsel/javascript-code-reuse-patterns">View the Project on GitHub
+          <small>petsel/javascript-code-reuse-patterns</small>
+        </a></p>
 
 
         <ul>
-          <li><a href="https://github.com/petsel/javascript-code-reuse-patterns/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/petsel/javascript-code-reuse-patterns/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/petsel/javascript-code-reuse-patterns/zipball/master">Download <strong>ZIP
+            File</strong></a></li>
+          <li><a href="https://github.com/petsel/javascript-code-reuse-patterns/tarball/master">Download <strong>TAR
+            Ball</strong></a></li>
           <li><a href="https://github.com/petsel/javascript-code-reuse-patterns">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
         <h1>
-<a name="javascript-code-reuse-patterns" class="anchor" href="#javascript-code-reuse-patterns"><span class="octicon octicon-link"></span></a>javascript-code-reuse-patterns</h1>
-<!--
-<p>Low level abstraction, module based, code reuse patterns intended for reflecting the basics before starting with
-more complex meta programming approaches.</p>
-//-->
-<p>Every now and again it happened and still does that JavaScript programming individuals each on their own discover
-this languages capability for - what then mostly gets referred to as - "functional or function based mixins".
-Most of them understand in this very moment the impact of theirs discovery in means of working with a different
-design approach for theirs future project architectures and code bases (modularisation, code recycling, creating
-types, generating type/object systems). But how does it come?</p>
+          <a name="javascript-code-reuse-patterns" class="anchor" href="#javascript-code-reuse-patterns"><span
+            class="octicon octicon-link"></span></a>javascript-code-reuse-patterns</h1>
+        <!--
+          <p>Low level abstraction, module based, code reuse patterns intended for reflecting the basics before starting with
+          more complex meta programming approaches.</p>
+        //-->
+        <p>Every now and again it happened and still does that JavaScript programming individuals each on their own discover
+          this languages capability for - what then mostly gets referred to as - "functional or function based mixins".
+          Most of them understand in this very moment the impact of theirs discovery in means of working with a different
+          design approach for theirs future project architectures and code bases (modularisation, code recycling, creating
+          types, generating type/object systems). But how does it come?
+        </p>
+        <p>
+          JavaScript is a delegation language. This languages core features are all about
+          <code>Object</code> and <code>Function</code> and
+          <code>closures</code> as much as about <code>call</code> and <code>apply</code> ... and yes about
+          <code>prototype</code> too. Do value the last mentioned
+          but don't adore it blindly. Delegation in JavaScript already happens implicitly when the prototype chain is
+          walked in order to e.g. find a method that might be related to but is not directly owned by an object. Once the
+          method was found it gets called within this objects context. Thus inheritance in JavaScript is covered by a
+          delegation automatism that is bound to the <code>prototype</code> slot of constructor functions.
+        </p>
+        <p>
+          But almost from its beginning JavaScript has been capable of delegating a function or a method directly to
+          an object that has need of it via <code>call</code> or <code>apply</code>. Thus introducing an object composition
+          pattern based on
+          functional TRAIT/MIXIN modules. This knowledge then repeatedly drives articles/discussions -
+          <a href="http://webreflection.blogspot.de/2013/04/flight-mixins-are-awesome.html">also the most recent one</a>
+          that <a href="https://github.com/WebReflection/object-mixin">right now already has aggregated into a project</a>.
+        </p>
+        <p>But before using such smart approaches it might be helpful to have a look into function based code reuse patterns
+          that do rely only on JavaScript's module pattern and therefore can be considered to be still free of any kind of
+          meta programming.
+        </p>
 
-<p>JavaScript is a delegation language. This languages core features are all about <code>Object</code> and <code>Function</code> and
-<code>closures</code> as much as about <code>call</code> and <code>apply</code> ... and yes about <code>prototype</code> too. Do value the last mentioned
-but don't adore it blindly. Delegation in JavaScript already happens implicitly when the prototype chain is
-walked in order to e.g. find a method that might be related to but is not directly owned by an object. Once the
-method was found it gets called within this objects context. Thus inheritance in JavaScript is covered by a
-delegation automatism that is bound to the <code>prototype</code> slot of constructor functions.</p>
-
-<p>But almost from its beginning JavaScript has been capable of delegating a function or a method directly to
-an object that has need of it via <code>call</code> or <code>apply</code>. Thus introducing an object composition pattern based on
-functional TRAIT/MIXIN modules. This knowledge then repeatedly drives articles/discussions -
-<a href="http://webreflection.blogspot.de/2013/04/flight-mixins-are-awesome.html">also the most recent one</a>
-that <a href="https://github.com/WebReflection/object-mixin">right now already has aggregated into a project</a>.</p>
-
-<p>But before using such smart approaches it might be helpful to have a look into function based code reuse patterns
-that do rely only on JavaScript's module pattern and therefore can be considered to be still free of any kind of
-meta programming.</p>
-
-<ul>
-  <li>
-    <a href="./berlin.js/2013-05-16/slides/index.html">2013-05-16: slides prepared for the berlin.js talk that unfortunately couldn't be held.</a>
-  </li>
-  <li>
-    <a href="https://github.com/petsel/javascript-code-reuse-patterns">2013-04-19: this project on GitHub.</a>
-  </li>
-</ul>
+        <ul>
+          <li>
+            <a href="./berlin.js/2013-05-16/slides/index.html">2013-05-16: slides prepared for the berlin.js talk that
+              unfortunately couldn't be held.</a>
+          </li>
+          <li>
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns">2013-04-19: this project on GitHub.</a>
+          </li>
+        </ul>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/petsel">petsel</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+
+        <p>
+          <small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small>
+        </p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+
+
   </body>
 </html>
