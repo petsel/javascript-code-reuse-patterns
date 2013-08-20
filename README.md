@@ -32,7 +32,7 @@ meta programming.
 
 Go for the slideshow or get a closer look at the sources.
 
-- [2013-05-16: slides prepared for the berlin.js talk that unfortunately couldn't be held.](http://petsel.github.io/javascript-code-reuse-patterns/berlin.js/2013-05-16/slides)
+- [2013-05-16: slides prepared for the berlin.js talk that unfortunately couldn't be held.](http://petsel.github.io/javascript-code-reuse-patterns/berlin.js/2013-05-16/slides/)
 
 - [Type Composition](../../tree/master/source/components/composition).
 - [Type Factories](../../tree/master/source/types/creation/Factories).
