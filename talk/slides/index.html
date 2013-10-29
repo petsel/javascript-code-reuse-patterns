@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>JavaScript Code Reuse Patterns - Function Based Object/Type Composition</title>
+
+    <meta name="description" content="JavaScript Code Reuse Patterns - Function Based Object/Type Composition - slides for webtechconf - Munic - October 28th 2013 - Peter Seliger - @petsel (http://twitter.com/petsel)">
+    <meta name="author" content="Peter Seliger">
+    <meta name="generator" content="Reveal.js by Hakim El Hattab (http://hakim.se)">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme"><!--
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">//-->
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <style>
+      /*.reveal pre code {
+        min-height: 500px;
+      }*/ /*
+      .reveal section h3 + a {
+        margin-top: 1em;
+      }*/
+      .reveal section#cover h1 + h3 {
+        margin-top: .6em;
+      }
+      .reveal section#cover h3 + p,
+      .reveal section#delegation-language h3 + p {
+        margin-top: 1em;
+      }
+      .reveal section#composition-conflicts h3 + p {
+        margin-top: 2em;
+        text-align: left;
+      }
+      .reveal section blockquote {
+        text-align: left;
+      }
+      .reveal section ul,
+      .reveal section *.list-item-separator {
+        margin-top: .6em;
+      }
+      .reveal section#traits-similar-concepts *.list-item-separator {
+        margin-top: .3em;
+      }
+    </style>
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+
+        <section id="cover">
+          <h1>JavaScript Code Reuse Patterns</h1>
+          <h3>Function Based Object/Type Composition</h3>
+          <p>
+            <small>
+              webtechconf - Munic - October 28th 2013
+              <a href="https://github.com/petsel/javascript-code-reuse-patterns">Peter Seliger</a> /
+              <a href="http://twitter.com/petsel">@petsel</a>
+            </small>
+          </p>
+          <p>
+            <small>
+              Frontend Engineer at <a href="http://xing.com">XING AG</a>
+            </small>
+          </p>
+
+
+          <aside class="notes">
+            <ul>
+              <li>introduce yourself</li>
+              <li>introduce the topic</li>
+              <li>
+                ask questions
+                <ul>
+                  <li>who is mainly FE developer</li>
+                  <li>who is more the backend guy? - node.js?</li>
+                  <li>who does even both?</li>
+                  <li>who uses any kind of <code>extend</code></li>
+                  <li>who needs inheritance/*class* hierarchies deeper than 2nd level</li>
+                  <li>who feels really comfortable with <code>call</code> and <code>apply</code></li>
+                </ul>
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+
+        <section>
+          <h2>Agenda</h2>
+          <ul>
+            <li class="fragment">JavaScript - A Delegation Language.</li>
+            <li class="fragment">Implicit and Explicit Behavior Delegation.</li>
+            <li class="fragment list-item-separator">Real World Examples.</li>
+            <li class="fragment list-item-separator">Definition Of <code>Role</code>, <code>Trait</code> and <code>Mixin</code>.</li>
+            <li class="fragment">Function based Trait and Mixin Modules.</li>
+            <li class="fragment list-item-separator">
+              Shortly mention <a href="http://soft.vub.ac.be/~tvcutsem/traitsjs/">trait.js</a>
+              and <a href="http://cocktailjs.github.io/">CocktailJS</a><br/>
+              and theirs approaches.</li>
+          </ul>
+
+
+          <aside class="notes">
+            <ul>
+              <li>first two points as reminder and entry point into this talk.</li>
+              <li>next two points cover my own point of view as it has shaped out within the last 7 years.</li>
+            </ul>
+          </aside>
+        </section>
+
+
+        <section>
+          <h2>Goals</h2>
+          <ul>
+            <li class="fragment">establish a generally accepted set of terms.</li>
+            <li class="fragment">accentuate the importance of state.</li>
+            <li class="fragment list-item-separator">
+              encourage usage of function based<br/>
+              Trait and Mixin patterns.
+            </li>
+            <li class="fragment">
+              discourage usage of object based<br/>
+              <em><code>[LibraryName].extends</code></em> approaches.
+            </li>
+          </ul>
+        </section>
+
+
+        <section id="delegation-language">
+          <section>
+            <h2>Delegation Language.</h2>
+          </section>
+
+
+          <section>
+            <h3>Delegation Language.</h3>
+
+            <ul>
+              <li>
+                Its core features are all about <code>Object</code><br/>
+                and <code>Function</code> and <em>closures</em> ...
+              </li>
+              <li class="fragment">
+                as much as about <code>call</code> and <code>apply</code>, ...
+              </li>
+
+              <li class="fragment list-item-separator">
+                and yes, about <code>prototype</code> too.
+              </li>
+
+              <li class="fragment list-item-separator">
+                Do value the last mentioned ...
+              </li>
+              <li class="fragment">
+                but don't adore it blindly.
+              </li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  I see more FE code that uses library specific
+                  <code>extend</code>(ext.js, iquery, backbone) methods
+                  than I see functional Trait/Mixin patterns
+                  (A fresh look at JavaScript Mixins - May 31, 2011 by Angus Croll)
+                </li>
+                <li>
+                  I see a lot FE code that depends on meta programming for e.g.
+                  <code>Class(...)</code> / <code>Class.create(...)</code> even
+                  though a factory module combined with a functional Trait/Mixin
+                  module would fit too.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h3>Delegation Language.</h3>
+
+            <ul>
+              <li>
+                Delegation in JavaScript already happens implicitly when the prototype chain is walked
+                in order to e.g. find a method that might be related to but is not directly owned by an object.
+              </li>
+              <li class="fragment">
+                Once the method was found it gets called within this objects context.
+              </li>
+              <li class="fragment list-item-separator">
+                Thus <em>inheritance</em> in JavaScript is covered by a <em>delegation automatism</em>
+                that is bound to the <code>prototype</code> slot of constructor functions.
+              </li>
+            </ul>
+          </section>
+
+
+          <section>
+            <h3>Delegation Language.</h3>
+
+            <ul>
+              <li>
+                But almost from its beginning JavaScript has been capable of delegating a function or a method
+                directly to an object that has need of it via <code>call</code> or <code>apply</code>.
+              </li>
+              <li class="fragment">
+                Thus introducing an object composition pattern based on functional <code>TRAIT</code>/<code>MIXIN</code> modules.
+              </li>
+            </ul>
+          </section>
+
+
+          <section>
+            <h3>Delegation Language.</h3>
+
+            <p><a href="../../assets/examples/js/__talktive-pets.js">delegation example</a> part I</p>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var cat = {
+  sound     : "meow",
+  makeSound : function () {
+    console.log(this.sound);
+  }
+};
+var dog = {
+  sound: "woof"
+};
+
+console.log("cat.sound", cat.sound); // "meow"
+console.log("dog.sound", dog.sound); // "woof"
+
+console.log("typeof cat.makeSound", (typeof cat.makeSound)); // "function"
+console.log("typeof dog.makeSound", (typeof dog.makeSound)); // "undefined"
+
+cat.makeSound.call(dog); // "woof"
+
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h3>Delegation Language.</h3>
+
+            <p><a href="../../assets/examples/js/__talktive-pets.js">delegation example</a> part II</p>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var cat = {sound: "meow"}, dog = {sound: "woof"};
+
+var Talkative = function () {
+  this.makeSound = function () {
+    console.log(this.sound);
+  };
+};
+
+console.log("typeof cat.makeSound", (typeof cat.makeSound)); // "undefined"
+console.log("typeof dog.makeSound", (typeof dog.makeSound)); // "undefined"
+
+Talkative.call(cat);
+Talkative.call(dog);
+
+cat.makeSound(); // "meow"
+dog.makeSound(); // "woof"
+
+              </code>
+            </pre>
+          </section>
+
+<!--
+          <aside class="notes">
+            ADDITIONAL NOTES TO BE PLACED INTO HERE IF THERE IS NEED OF IT
+          </aside>
+//-->
+        </section>
+
+
+        <section>
+          <section>
+            <h2><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s.</h2>
+
+
+
+            <aside class="notes">
+              what for myself did shape out within the last 7 years.
+            </aside>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s.</h5>
+            <h3><code>Trait</code></h3>
+
+            <ul>
+              <li>
+                <a href="http://scg.unibe.ch/archive/papers/Scha02bTraits.pdf">»Traits: Composable Units of Behavior«</a>
+                <p>Nathanael Schärli et.al., Universität Bern, 25th November 2002</p>
+              </li>
+              <li>
+                <a href="http://scg.unibe.ch/archive/phd/schaerli-phd.pdf">»Traits: Composing Classes from Behavioral Building Blocks«</a>
+                <p>Nathanael Schärli, Universität Bern, 03.02.2005</p>
+              </li>
+
+              <li class="list-item-separator">
+                <a href="http://scg.unibe.ch/">»Software Composition Group« (SCG) at Bern University.</a>
+              </li>
+              <li>
+                <a href="http://scg.unibe.ch/research/traits/">SCG Traits Research</a>
+              </li>
+            </ul>
+
+            <aside class="notes">
+              <ul>
+                <li>
+                  In 2008 I really wanted to know what the constructs
+                  that I referred to before as <em>Interfaces</em>,
+                  later <em>implemented Interfaces</em>, should be
+                  called properly.
+                </li>
+                <li>
+                  Gotten introduced to Ruby's Mixins and doing further
+                  research I finally found the best answers in papers
+                  published by the Software Composition Group (SCG) of
+                  the University of Bern.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s.</h5>
+            <h3><code>SCG Trait</code>(very briefly)</h3>
+
+            <ul>
+              <li>
+                is a container for a <em>stateless</em> implemented method
+                or for a collection of <em>stateless</em> implemented methods.
+              </li>
+              <li class="fragment list-item-separator">
+                or could be seen as an incomplete class <em>without state</em> (properties/members/fields) ...
+              </li>
+              <li class="fragment">
+                but with <em>behavior</em> (methods).
+              </li>
+            </ul>
+          </section>
+
+
+          <section id="traits-similar-concepts">
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s.</h5>
+            <h3>Similar Concepts (kind of)</h3>
+
+            <ul>
+              <li>
+                <em>»Self«</em> in a historic approach acknowledges stateful <a href="http://en.wikipedia.org/wiki/Trait_(abstract_type)"><span>traits</span></a>.
+              </li>
+              <li class="list-item-separator">
+                <a href="http://en.wikipedia.org/wiki/Perl_6#Roles"><code>Role</code>s</a> in <em>»Perl 6«</em> as well as in the <em>»Perl 5«</em> based
+                <a href="http://en.wikipedia.org/wiki/Moose_(Perl)"><em>»Moose«</em></a>-Framework are allowed to be stateful too.
+              </li>
+              <li class="fragment">
+                <code>Role</code>s are also supported by the
+                <a href="http://en.wikipedia.org/wiki/Joose_(framework)"><em>»Joose«</em></a>-Framework,
+                a <em>»Moose«</em> inspired JavaScript Meta-Object System created by
+                <a href="https://plus.google.com/116910304844117268718">Malte Ubl</a> / <a href="https://twitter.com/cramforce">@cramforce</a>.
+              </li>
+              <li class="list-item-separator">
+                <em>»Ruby«</em> has <a href="http://en.wikipedia.org/wiki/Mixin"><code>Mixin</code>s</a>, and
+              </li>
+              <li>
+                 <a href="https://en.wikipedia.org/wiki/Flavors_(programming_language)"><em>»Flavors«</em></a> firstly introduced the <code>Mixin</code> concept to »LISP«.
+              </li>
+            </ul>
+          </section>
+
+
+          <section id="traits-similar-concepts">
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s.</h5>
+            <h3>Live Coding Examples</h3>
+
+            <ul>
+              <li>
+                evolving - <a href="../../assets/examples/js/Enumerable.first-last.evolving.js"><code>Enumerable_first_last</code></a>
+              </li>
+              <li>
+                evolving - <a href="../../assets/examples/js/Queue.evolving.js"><code>Allocable</code> and <code>Queue</code></a>
+              </li>
+              <li>
+                evolving - <a href="../../assets/examples/js/Observable.SignalsAndSlots.evolving.js"><code>Observable_SignalsAndSlots</code></a>
+              </li>
+              <li>
+                evolving - <a href="../../assets/examples/js/Queue.evolving.js"><code>Allocable</code> and <code>Observable</code> and <code>Queue</code></a>
+              </li>
+              <li>
+                the whole nine yards - <a href="../../assets/examples/js/__composition.js"><code>Queue</code> composed by its factory</a>
+              </li>
+            </ul>
+          </section>
+
+<!--
+          <aside class="notes">
+            ADDITIONAL NOTES TO BE PLACED INTO HERE IF THERE IS NEED OF IT
+          </aside>
+//-->
+        </section>
+
+
+        <section>
+          <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+          <h3><code>Role</code></h3>
+
+          <blockquote>
+            Any function object that is a container for at least one public behavior
+            or acts as collection of more than one public behavior and is intended
+            to neither being invoked by the call operator »<code>()</code>« nor with
+            the »<code>new</code>« operator but always should be applied to objects
+            by invoking one of the <code>[Function]</code>s call methods - either
+            <code>[call]</code> or <code>[apply]</code> - is considered to be a <b>Role</b>.
+          </blockquote>
+
+          <aside class="notes">
+            <code>Role</code> Criterias
+            <ul>
+              <li>
+                container for at least one public behavior.
+              </li>
+              <li>
+                (container for) a collection of more than one public behavior.
+              </li>
+              <li>
+                never invoked by the call operator »<code>()</code>«.
+              </li>
+              <li>
+                never invoked with the »<code>new</code>« operator.
+              </li>
+              <li>
+                always applied to objects by delegation via <code>[call]</code> or <code>[apply]</code>
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+
+        <section>
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Trait</code></h3>
+
+            <blockquote>
+              A <b>purely stateless</b> implementation of a <b>Role</b> should be called <b>Trait</b>.
+            </blockquote>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Trait</code></h3>
+
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns/blob/master/source/components/composition/Traits/Trait.js">pattern example</a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var Trait = (function () {
+
+  var
+    behavior_01 = function () {
+      // implementation of behavior.
+    },
+    behavior_02 = function () {
+      // implementation of behavior.
+    }
+  ;
+  var Trait = function () {
+    // stateless trait implementation.
+    var compositeType = this;
+
+    compositeType.behavior_01 = behavior_01;
+    compositeType.behavior_02 = behavior_02;
+  };
+
+  return Trait;
+
+}());
+
+// usage.
+var obj = {
+  // object description.
+};
+Trait.call(obj); // [obj] now features additional behavior applied by [Trait].
+
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Trait</code></h3>
+
+            example - <code>Enumerable_first_last</code>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var Enumerable_first_last = (function () {
+
+  var
+    first = function () {
+      return this[0];
+    },
+    last = function () {
+      return this[this.length - 1];
+    }
+  ;
+  return function () {
+
+    this.first = first;
+    this.last = last;
+  };
+}());
+
+
+var
+  allListItems = document.getElementsByTagName("li"),
+  allSections = document.getElementsByTagName("section")
+;
+Enumerable_first_last.call(allListItems);
+Enumerable_first_last.call(allSections);
+
+console.log("allListItems", [allListItems, (allListItems[0] === allListItems.first()), (allListItems[allListItems.length - 1] === allListItems.last())]);
+console.log("allSections", [allSections, (allSections[0] === allSections.first()), (allSections[allSections.length - 1] === allSections.last())]);
+
+
+Enumerable_first_last.call(Array.prototype);
+
+console.log('["1st", "2nd", "3rd"].first()', ["1st", "2nd", "3rd"].first());
+console.log('["first", "second", "third"].last()', ["first", "second", "third"].last());
+
+Array.prototype.last = null;
+Array.prototype.first = null;
+
+console.log('["1st", "2nd", "3rd"].first', ["1st", "2nd", "3rd"].first);
+console.log('["first", "second", "third"].last', ["first", "second", "third"].last);
+
+              </code>
+            </pre>
+          </section>
+
+<!--
+          <aside class="notes">
+            ADDITIONAL NOTES TO BE PLACED INTO HERE IF THERE IS NEED OF IT
+          </aside>
+//-->
+        </section>
+
+
+        <section>
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Privileged Trait</code></h3>
+
+            <blockquote>
+              An implementation of a <b>Role</b> that relies on <b>additionally injected state</b> but
+              does only read and <b>never does mutate it</b> should be called <b>Privileged Trait</b>.
+            </blockquote>
+
+            <aside class="notes">
+              <code>Privileged Trait</code> Criterias
+              <ul>
+                <li>
+                  implementation relies on <b>additionally injected state</b>.
+                </li>
+                <li>
+                  does <b>only read</b> this state.
+                <li>
+                  does <b>never mutate</b> this state.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Privileged Trait</code></h3>
+
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns/blob/master/source/components/composition/Traits/PrivilegedTrait.js">pattern example</a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var PrivilegedTrait = (function () {
+
+  var
+    behavior_02 = function () {
+      // e.g. implementation of behavior.
+      return "behavior_02";
+    }
+  ;
+  var PrivilegedTrait = function (injectedReadOnlyState) {
+    var compositeType = this;
+
+    compositeType.behavior_01 = function () {
+      /*
+        implementation of behavior is not allowed
+        to mutate [injectedReadOnlyState] but shall
+        only read it.
+
+        nevertheless if [injectedReadOnlyState] was
+        a reference it still could be mutable but only
+        remotely from outside this trait modules scope.
+      */
+      return injectedReadOnlyState;
+    };
+    compositeType.behavior_02 = behavior_02;
+  };
+
+  return PrivilegedTrait;
+
+}());
+
+// usage.
+var obj = {
+  // object description.
+};
+PrivilegedTrait.call(obj, "injectedReadOnlyState"); // [obj] now features additional behavior applied by [PrivilegedTrait].
+
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Privileged Trait</code></h3>
+
+            example - <code>Allocable</code>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var Allocable = (function () {
+
+  var makeArray = (function (proto_slice) {
+    return function (listType) {
+
+      return proto_slice.call(listType);
+    };
+  }(Array.prototype.slice));
+
+  return function (list) {
+    var allocable = this;
+
+    allocable.valueOf = allocable.toArray = function () {
+        return makeArray(list);
+    };
+    allocable.toString = function () {
+      return ("" + list);
+    };
+    allocable.size = function () {
+      return list.length;
+    };
+  };
+}());
+
+
+var Queue = function () {
+
+  var
+    queue = this,
+    list = [],
+
+    onEnqueue = function (type) {
+      queue.dispatchEvent({target: queue, type: "enqueue", item: type/*, even more key:value pairs */});
+    },
+    onDequeue = function (type) {
+      queue.dispatchEvent({target: queue, type: "dequeue", item: type/*, even more key:value pairs */});
+    },
+    onEmpty = function () {
+      queue.dispatchEvent({target: queue, type: "empty"/*, even more key:value pairs */});
+    }
+  ;
+//Observable.call(queue);
+  Allocable.call(queue, list);
+
+  queue.enqueue = function (type) {
+    list.push(type);
+//  onEnqueue(type);
+  };
+  queue.dequeue = function () {
+    var type = list.shift();
+/*
+    if (list.length <= 0) {
+      onEmpty();
+    }
+    onDequeue(type);
+*/
+    return type;
+  };
+};
+
+var queue = new Queue;
+console.log("queue", [queue, queue.toArray(), queue.toString(), queue.size()]);
+
+console.log('queue.enqueue("hallo")', [queue.enqueue("hallo"), queue.toArray(), queue.toString(), queue.size()]);
+console.log('queue.enqueue("world")', [queue.enqueue("world"), queue.toArray(), queue.toString(), queue.size()]);
+
+console.log('queue.dequeue()', [queue.dequeue(), queue.toArray(), queue.toString(), queue.size()]);
+console.log('queue.dequeue()', [queue.dequeue(), queue.toArray(), queue.toString(), queue.size()]);
+
+              </code>
+            </pre>
+          </section>
+
+<!--
+          <aside class="notes">
+            ADDITIONAL NOTES TO BE PLACED INTO HERE IF THERE IS NEED OF IT
+          </aside>
+//-->
+        </section>
+
+
+        <section>
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Mixin</code></h3>
+
+            <blockquote>
+              An implementation of a <b>Role</b> that does <b>create mutable state on its own</b> in
+              order to solve its task(s) but does <b>never rely on additionally injected state</b>
+              should be called <b>Mixin</b>.
+            </blockquote>
+
+            <aside class="notes">
+              <code>Mixin</code> Criterias
+              <ul>
+                <li>
+                  implementation does <b>create mutable state on its own</b>.
+                </li>
+                <li>
+                  implementation does <b>never rely on additionally injected state</b>.
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Mixin</code></h3>
+
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns/blob/master/source/components/composition/Mixins/Mixin.js">pattern example</a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var Mixin = (function () {
+
+  var
+    AdditionalState = function () {
+      // implementation of a custom state type [Mixin] relies on.
+    },
+    behavior_02 = function () {
+      // e.g. implementation of behavior.
+      return "behavior_02";
+    }
+  ;
+  var Mixin = function () {
+    var
+      compositeType = this,
+      additionalState = new AdditionalState(compositeType) // (mutable) additional state.
+    ;
+    compositeType.behavior_01 = function () {
+      /*
+        implementation of behavior is allowed
+        to mutate [additionalState].
+      */
+    };
+    compositeType.behavior_02 = behavior_02;
+  };
+
+  return Mixin;
+
+}());
+
+// usage.
+var obj = {
+  // object description.
+};
+Mixin.call(obj); // [obj] now features additional behavior applied by [Mixin].
+
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Mixin</code></h3>
+
+            <a href="https://gist.github.com/petsel/5591196">example - <code>Observable_SignalsAndSlots</code></a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var Observable_SignalsAndSlots = (function () {
+
+  // the »Observable« Mixin Module.
+  // ... implementation ...
+  var
+    Event = function (target/*:[EventTarget(observable)]*/, type/*:[string|String]*/) {
+      this.type      = type;
+      this.target    = target;
+    },
+    EventListener = function (target/*:[EventTarget(observable)]*/, type/*:[string|String]*/, handler/*:[Function]*/) {
+      var defaultEvent = new Event(target, type); // default [Event] object
+
+      this.handleEvent = function (evt/*:[string|String|Event-like-Object]*/) { /*:void*/
+        // ... implementation ...
+      };
+    },
+    EventTargetMixin = function () {
+      // [EventTargetMixin] will be exposed as »Observable« Mixin.
+      var eventMap = {};
+
+      this.addEventListener = function (type/*:[string|String]*/, handler/*:[Function]*/) { /*:[EventListener|undefined]*/
+        var
+          event = eventMap[type],
+          listener = new EventListener(this, type, handler)
+        ;
+        // ... implementation ...
+      };
+      this.dispatchEvent = function (evt/*:[string|String|Event-like-Object]*/) { /*:[true|false]*/
+        // ... implementation ...
+      };
+    }
+  ;
+  return EventTargetMixin;
+}());
+
+              </code>
+            </pre>
+          </section>
+
+<!--
+          <aside class="notes">
+            ADDITIONAL NOTES TO BE PLACED INTO HERE IF THERE IS NEED OF IT
+          </aside>
+//-->
+        </section>
+
+
+        <section>
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Privileged Mixin</code></h3>
+
+            <blockquote>
+              An implementation of a <b>Role</b> that relies either on <b>mutation of additionally
+              injected state only</b> or on both, <b>creation of mutable state and additionally
+              injected state</b>, regardless if the latter then gets mutated or not, should
+              be called <b>Privileged Mixin</b>.
+            </blockquote>
+
+            <aside class="notes">
+              <code>Privileged Mixin</code> Criterias
+              <ul>
+                <li>
+                  implementation does <b>mutate additionally injected state</b> exclusively.
+                </li>
+                <li>
+                  implementation relies on both, <b>creation of mutable state</b> and
+                  <b>additionally injected state</b> (regardless if the latter then gets mutated or not).
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+
+          <section>
+            <h5><code>Role</code>s, <code>Trait</code>s and <code>Mixin</code>s in JS.</h5>
+            <h3><code>Privileged Mixin</code></h3>
+
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns/blob/master/source/components/composition/Mixins/PrivilegedMixin.js">pattern example</a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var PrivilegedMixin = (function () {
+
+  var
+    AdditionalState = function () {
+      // implementation of a custom state type [PrivilegedMixin] relies on.
+    },
+    behavior_02 = function () {
+      // e.g. implementation of behavior.
+      return "behavior_02";
+    }
+  ;
+  var PrivilegedMixin = function (injectedState) {
+    var
+      compositeType = this,
+
+    //additionalState = new AdditionalState(compositeType)                // (mutable) additional state.
+      additionalState = new AdditionalState(compositeType, injectedState) // (mutable) additional state.
+    ;
+    compositeType.behavior_01 = function () {
+      /*
+        - implementation of behavior is allowed to mutate [additionalState].
+        - it is also allowed to manipulate [injectedState]
+      */
+    };
+    compositeType.behavior_02 = behavior_02;
+  };
+
+  return PrivilegedMixin;
+
+}());
+
+// usage.
+var obj = {
+  // object description.
+};
+PrivilegedMixin.call(obj, "injectedState"); // [obj] now features additional behavior applied by [PrivilegedMixin].
+
+              </code>
+            </pre>
+          </section>
+
+<!--
+          <aside class="notes">
+            ADDITIONAL NOTES TO BE PLACED INTO HERE IF THERE IS NEED OF IT
+          </aside>
+//-->
+        </section>
+
+
+        <section>
+          <section>
+            <h3><code>Trait</code> and <code>Mixin</code> based Type/Object Composition in JS.</h3>
+
+            <ul>
+              <li class="fragment">Traits applied within other Traits and/or Mixins.</li>
+              <li class="fragment">Mixins applied within other Mixins and/or Traits.</li>
+              <li class="fragment">Traits and/or Mixins applied within Constructors/Factories.</li>
+              <li class="fragment">Traits and/or Mixins applied to any JavaScript object.</li>
+            </ul>
+          </section>
+
+
+          <section>
+            <h3><code>Trait</code> and <code>Mixin</code> based Type/Object Composition in JS.</h3>
+
+            <a href="https://github.com/petsel/javascript-code-reuse-patterns/blob/master/source/types/creation/Factories/Composite.js">pattern example</a>
+            <pre>
+              <code data-trim contenteditable class="javascript">
+
+var CompositeTypeFactory = (function () {
+
+  var CompositeType = function (type_configuration) {
+    var compositeType = this;
+    /*
+      - do implement something type specific
+      - do something with e.g. [type_configuration]
+    */
+    var locallyScopedTypeSpecificReference = [];
+
+    Mixin.apply(compositeType);
+    PrivilegedTrait.apply(compositeType, locallyScopedTypeSpecificReference);
+  };
+  CompositeType.prototype = {
+    /*
+      - if necessary do assign and/or describe
+        the [CompositeType] constructor's prototype.
+    */
+  };
+  /*
+    - purely stateless trait implementations almost always
+      should be exclusively applied to a constructors prototype.
+  */
+  Trait.call(CompositeType.prototype);
+
+  var
+    createType = function (arg_0/*[, arg_1[, arg_2[,...]]]*/) {
+      return (new CompositeType({
+        /*
+          do something with [arguments] ...
+          ... e.g. creating a type configuration.
+        */
+      }));
+    },
+    isType = function (type) {
+      return (type instanceof CompositeType);
+    }
+  ;
+
+  return {
+    create: createType,
+    isType: isType
+  };
+
+}());
+
+              </code>
+            </pre>
+          </section>
+
+
+          <section id="composition-conflicts">
+            <h5><code>Trait</code> and <code>Mixin</code> based Type/Object Composition in JS.</h5>
+            <h3>Resolving Composition Conflicts</h3>
+
+            <p>
+              <code>Trait</code> and <code>Mixin</code> implementations should resolve conflicts by making use of
+              <em><a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a></em> inspired
+              <em><a href="../../assets/examples/js/Function.modifiers.adviceTypes.before-after-around.js">method modifiers</a></em>.
+            </p>
+            <ul>
+              <li class="fragment"><code>Function.prototype.before</code></li>
+              <li class="fragment"><code>Function.prototype.after</code></li>
+              <li class="fragment"><code>Function.prototype.around</code></li>
+            </ul>
+          </section>
+        </section>
+
+
+        <section>
+          <h5>Questions?</h5>
+          <h3 class="fragment">Thank You</h3>
+        </section>
+
+
+      </div><!-- class="slides" //-->
+
+    </div><!-- class="reveal" //-->
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+//        { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+//        { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
