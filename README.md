@@ -32,7 +32,7 @@ meta programming.
 
 Go for the slideshow or get a closer look at the sources.
 
-- [2013-10-28: refactored slides for webtechconf in Munich.](http://petsel.github.io/javascript-code-reuse-patterns/talk/slides/)
+- [2013-10-29: refactored slides for webtechconf in Munich.](http://petsel.github.io/javascript-code-reuse-patterns/talk/slides/)
 - [2013-10-17: slides prepared for the berlin.js talk.](http://petsel.github.io/javascript-code-reuse-patterns/berlin.js/slides/)
 
 - [Type Composition](../../tree/master/source/components/composition).
