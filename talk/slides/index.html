@@ -49,6 +49,493 @@
       .reveal section#traits-similar-concepts *.list-item-separator {
         margin-top: .3em;
       }
+
+      html.end-titles .controls,
+      html.end-titles .progress {
+        transition: opacity 1200ms 1800ms;
+      }
+      html.end-titles .controls,
+      html.end-titles .progress {
+        opacity: 0;
+      }
+      html.end-titles .slides {
+        position: absolute!important;
+        left: 0!important;
+        top: 0!important;
+        width: 100%!important;
+        height: 100%!important;
+      }
+      html.end-titles .slides section[data-state=end-titles] {
+        position: absolute!important;
+        left: 0!important;
+        top: 0!important;
+        width: 100%!important;
+        height: 100%!important;
+      }
+
+      html.end-titles .slides section[data-state=end-titles] /*iframe*/#end-titles {
+        position: absolute!important;
+        left: 0!important;
+        top: 0!important;
+        width: 100%!important;
+        height: 100%!important;
+        max-width: none!important;
+        max-height: none!important;
+      }
+      html.end-titles .slides section[data-state=end-titles] /*div*/#final-credits {
+        position: absolute!important;
+        right: 5%;
+        top: 5%;
+        width: 45%;
+        height: auto;
+
+        font-size: 1em;
+        color: #fff;
+        text-align: left;
+      }
+
+      .reveal section#cover > img.qrcode,
+      html.end-titles .slides section[data-state=end-titles] > img {
+        display: block;
+        position: absolute!important;
+        left: 0!important;
+        top: 0!important;
+        width: auto!important;
+        height: auto!important;
+        max-width: none!important;
+        max-height: none!important;
+        margin: 0!important;
+        padding: 0!important;
+        border: none!important;
+      }
+      .reveal section#cover > img.qrcode,
+      html.end-titles .slides section[data-state=end-titles] > img.qrcode {
+        left: 5%!important;
+        top: 5%!important;
+      }
+      html.end-titles .slides section[data-state=end-titles] > img.total-eclipse-of-the-octocat {
+        opacity: .8;
+        width: 30%!important;
+      }
+
+
+      #final-credits ::selection {
+
+        background: #fcdf2b;
+        color: #000;
+        text-shadow: none;
+      }
+      #final-credits .jedi {
+
+        -webkit-transform: translateZ(0);
+           -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+             -o-transform: translateZ(0);
+                transform: translateZ(0);
+
+        -webkit-animation-iteration-count: infinite;
+           -moz-animation-iteration-count: infinite;
+            -ms-animation-iteration-count: infinite;
+             -o-animation-iteration-count: infinite;
+                animation-iteration-count: infinite;
+      }
+      #final-credits .yoda {
+
+        color: rgb(245, 255, 240);
+        text-shadow: 2px 2px 10px rgb(88, 255, 0);
+
+        -webkit-animation-name: yoda;
+           -moz-animation-name: yoda;
+            -ms-animation-name: yoda;
+             -o-animation-name: yoda;
+                animation-name: yoda;
+
+        -webkit-animation-duration: 5.4s;
+           -moz-animation-duration: 5.4s;
+            -ms-animation-duration: 5.4s;
+             -o-animation-duration: 5.4s;
+                animation-duration: 5.4s;
+      }
+      #final-credits .vader {
+
+        color: rgb(255, 240, 240);
+        text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+
+        -webkit-animation-name: vader;
+           -moz-animation-name: vader;
+            -ms-animation-name: vader;
+             -o-animation-name: vader;
+                animation-name: vader;
+
+        -webkit-animation-duration: 6.2s;
+           -moz-animation-duration: 6.2s;
+            -ms-animation-duration: 6.2s;
+             -o-animation-duration: 6.2s;
+                animation-duration: 6.2s;
+      }
+      #final-credits .windu {
+
+        color: rgb(250, 230, 255);
+        text-shadow: 3px 3px 10px rgb(202, 116, 221);
+
+        -webkit-animation-name: windu;
+           -moz-animation-name: windu;
+            -ms-animation-name: windu;
+             -o-animation-name: windu;
+                animation-name: windu;
+
+        -webkit-animation-duration: 5.8s;
+           -moz-animation-duration: 5.8s;
+            -ms-animation-duration: 5.8s;
+             -o-animation-duration: 5.8s;
+                animation-duration: 5.8s;
+      }
+      #final-credits .obi-wan {
+
+        color: rgb(220, 240, 255);
+        text-shadow: 3px 3px 10px rgb(55, 132, 214);
+
+        -webkit-animation-name: obi-wan;
+           -moz-animation-name: obi-wan;
+            -ms-animation-name: obi-wan;
+             -o-animation-name: obi-wan;
+                animation-name: obi-wan;
+
+        -webkit-animation-duration: 5.8s;
+           -moz-animation-duration: 5.8s;
+            -ms-animation-duration: 5.8s;
+             -o-animation-duration: 5.8s;
+                animation-duration: 5.8s;
+      }
+
+
+      @-webkit-keyframes yoda {
+        from {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+        16.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        33.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px -2px 10px rgb(88, 255, 0);
+        }
+        50% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px 2px 10px rgb(88, 255, 0);
+        }
+        66.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        83.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px -2px 10px rgb(88, 255, 0);
+        }
+        to {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+      }
+      @-moz-keyframes yoda {
+        from {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+        16.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        33.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px -2px 10px rgb(88, 255, 0);
+        }
+        50% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px 2px 10px rgb(88, 255, 0);
+        }
+        66.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        83.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px -2px 10px rgb(88, 255, 0);
+        }
+        to {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+      }
+      @-ms-keyframes yoda {
+        from {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+        16.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        33.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px -2px 10px rgb(88, 255, 0);
+        }
+        50% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px 2px 10px rgb(88, 255, 0);
+        }
+        66.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        83.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px -2px 10px rgb(88, 255, 0);
+        }
+        to {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+      }
+      @-o-keyframes yoda {
+        from {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+        16.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        33.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px -2px 10px rgb(88, 255, 0);
+        }
+        50% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px 2px 10px rgb(88, 255, 0);
+        }
+        66.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        83.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px -2px 10px rgb(88, 255, 0);
+        }
+        to {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+      }
+      @keyframes yoda {
+        from {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+        16.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        33.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px -2px 10px rgb(88, 255, 0);
+        }
+        50% {
+          color: rgb(255, 255, 255);
+          text-shadow: -2px 2px 10px rgb(88, 255, 0);
+        }
+        66.66% {
+          color: rgb(220, 255, 220);
+          text-shadow: 0 0 10px rgb(88, 255, 0);
+        }
+        83.33% {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px -2px 10px rgb(88, 255, 0);
+        }
+        to {
+          color: rgb(255, 255, 255);
+          text-shadow: 2px 2px 10px rgb(88, 255, 0);
+        }
+      }
+
+
+      @-webkit-keyframes vader {
+        from {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+        16.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px -3px 10px rgb(240 , 30, 30);
+        }
+        33.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        50% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px 3px 10px rgb(240 , 30, 30);
+        }
+        66.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px -3px 10px rgb(240 , 30, 30);
+        }
+        83.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        to {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+      }
+      @-moz-keyframes vader {
+        from {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+        16.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px -3px 10px rgb(240 , 30, 30);
+        }
+        33.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        50% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px 3px 10px rgb(240 , 30, 30);
+        }
+        66.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px -3px 10px rgb(240 , 30, 30);
+        }
+        83.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        to {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+      }
+      @-ms-keyframes vader {
+        from {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+        16.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px -3px 10px rgb(240 , 30, 30);
+        }
+        33.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        50% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px 3px 10px rgb(240 , 30, 30);
+        }
+        66.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px -3px 10px rgb(240 , 30, 30);
+        }
+        83.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        to {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+      }
+      @-o-keyframes vader {
+        from {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+        16.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px -3px 10px rgb(240 , 30, 30);
+        }
+        33.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        50% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px 3px 10px rgb(240 , 30, 30);
+        }
+        66.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px -3px 10px rgb(240 , 30, 30);
+        }
+        83.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        to {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+      }
+      @keyframes vader {
+        from {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+        16.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px -3px 10px rgb(240 , 30, 30);
+        }
+        33.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        50% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px 3px 10px rgb(240 , 30, 30);
+        }
+        66.66% {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: -3px -3px 10px rgb(240 , 30, 30);
+        }
+        83.33% {
+          color: rgb(255, 230, 230);
+          text-shadow: 0 0 10px rgb(240 , 30, 30);
+        }
+        to {/*
+          color: rgb(255, 240, 240);*/
+          color: rgb(255, 255, 255);
+          text-shadow: 3px 3px 10px rgb(240 , 30, 30);
+        }
+      }
     </style>
 
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
@@ -103,6 +590,11 @@
               </li>
             </ul>
           </aside>
+        </section>
+
+
+        <section>
+          <img class="qrcode" src="assets/media/qrcode-cover.png">
         </section>
 
 
@@ -1040,10 +1532,40 @@ var CompositeTypeFactory = (function () {
         </section>
 
 
-        <section>
+        <section data-state="before-end-titles">
           <h5>Questions?</h5>
           <h3 class="fragment">Thank You</h3>
+          <img class="qrcode" src="assets/media/qrcode_end-titles.png">
+          <p class="fragment">
+            <a href="../webtechconf-2013_JavaScript-Code-Reuse-Patterns_Function-Based-Object-and-Type-Composition.pdf">PDF Handout</a>
+          </p>
         </section>
+
+
+        <section data-state="end-titles">
+          <iframe id="end-titles" src="about:blank"></iframe>
+          <div id="final-credits">
+            <p class="jedi yoda">
+              https://github.com/hakimel/reveal.js
+            </p>
+            <p class="jedi vader">
+              https://github.com/artemave/StarLogs
+            </p>
+            <p class="jedi windu">
+              http://qrcode-monkey.de
+            </p><!--
+            <p class="jedi obi-wan">
+              http://octodex.github.com/
+            </p>//-->
+          </div>
+          <img class="qrcode" src="assets/media/qrcode_end-titles.png"><!--
+          <img class="total-eclipse-of-the-octocat" src="./assets/total-eclipse-of-the-octocat.jpg">//-->
+        </section><!--
+
+
+        <section data-state="after-end-titles">
+          <h5>after-end-titles</h5>
+        </section>//-->
 
 
       </div><!-- class="slides" //-->
@@ -1081,6 +1603,39 @@ var CompositeTypeFactory = (function () {
         ]
       });
 
+    </script>
+
+    <script>
+      (function () {
+
+        var
+          STARLOG_SERVICE         = "http://starlogs.net/#",
+          GITHUB_REPOSITORY_NAME  = "petsel/javascript-code-reuse-patterns",
+
+
+          endTitlesSource = [
+
+            STARLOG_SERVICE,
+            GITHUB_REPOSITORY_NAME
+
+          ].join(""),
+
+          noEndTitlesReference = "about:blank",
+
+          elmEndTitles = document.getElementById("end-titles")
+        ;
+
+        Reveal.addEventListener("end-titles", function () {
+          elmEndTitles.src = endTitlesSource;
+        });
+        Reveal.addEventListener("before-end-titles", function () {
+          elmEndTitles.src = noEndTitlesReference;
+        });/*
+        Reveal.addEventListener("after-end-titles", function () {
+          elmEndTitles.src = noEndTitlesReference;
+        });*/
+
+      }());
     </script>
 
   </body>
